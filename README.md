@@ -5,6 +5,7 @@
 * Index / Stage: 暂存区
 * Repository: 仓库区（或本地仓库）
 * Remote: 远程仓库
+![image](https://user-images.githubusercontent.com/19526072/49999253-4c690980-ffd1-11e8-892a-bff60b374d12.png)
 
 ### 新建
 ```bash
