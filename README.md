@@ -113,6 +113,31 @@ git checkout -
 # 建立追踪关系，在现有分支与指定的远程分支之间
 git branch --set-upstream [branch] [remote-branch]
 
-# 
+# 合并指定分支 master-yt 到当前分支 master
+git merge master-yt
 
+# 选择一个 commit，合并进当前分支
+git cherry-pick [commitid]
+
+# 删除分支
+git branch -d master-ytt
+
+# 删除远程分支
+git push origin --delete [branch-name]
+git branch -dr [remote/branch]
+```
+### 标签
+
+```bash
+# 列出标签
+git tag
+```
+### 查看信息
+
+```bash 
+# 显示有变更的文件
+git status
+
+# 显示当前分支的版本历史
+git log
 ```
