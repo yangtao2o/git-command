@@ -141,3 +141,7 @@ git status
 # 显示当前分支的版本历史
 git log
 ```
+
+## 参考目录
+* [Git 常用命令](http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html)
+* [Git教程 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
