@@ -1,3 +1,4 @@
+.DS_Store
 # Logs
 logs
 *.log
@@ -59,9 +60,5 @@ typings/
 
 # next.js build output
 .next
-
-docs/.vuepress/dist/
-docs/.vuepress/public/Python/
-docs/.vuepress/public/Database/
 
 .idea
