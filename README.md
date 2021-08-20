@@ -1,8 +1,6 @@
-# Git 常用命令练习
+# Git 常用命令
 
-> 使用 `git bash` 的过程中，除了常用的那几条，其它的总需要查找手册，索性跟着大牛总结的文章走一遍吧
-
-## 前言
+## 基本使用
 
 - Workspace: 工作区
 - Index / Stage: 暂存区
@@ -145,21 +143,68 @@ git tag
 
 ### 查看信息
 
-```bash
-# 显示有变更的文件
-git status
+显示有变更的文件
 
-# 显示当前分支的版本历史
+```bash
+git status
+```
+
+显示当前分支的版本历史
+
+```sh
 git log
 ```
+
+```sh
+# 显示整个本地仓储的commit, 包括所有branch的commit
+# 甚至包括已经撤销的commit, 只要HEAD发生了变化, 就会在reflog里面看得到
+# 回滚撤销时可关注其变化
+git reflog
+
+# 比如回滚记录
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{0}: reset: moving to HEAD^
+cafa257 HEAD@{1}: pull: Fast-forward
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{2}: reset: moving to HEAD^
+cafa257 HEAD@{3}: commit: test: 回滚4
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{4}: reset: moving to HEAD^
+25d1741 HEAD@{5}: commit: test: 回滚3
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{6}: reset: moving to HEAD^
+2130aa8 HEAD@{7}: commit: test: 回滚2
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{8}: commit: test: 回滚
+```
+
+查看暂存区域（索引）内容
+
+```sh
+git ls-files -s
+```
+
+### 回滚
+
+```sh
+git reset [<mode>] [<commit>]
+```
+
+三种常用 mode 方式：mixed（默认值）、soft、hard 等
+
+```sh
+# reset 只会用 HEAD 移动节点，索引和工作目录内容未受影响
+git reset --soft  HEAD^
+
+# reset 会用 HEAD 指向的当前快照的内容来更新暂存区（索引）
+git reset --mixed  HEAD^
+
+# reset 继续这 --mixed 的操作覆盖索引，同时会将索引内容覆盖工作目录
+git reset --hard  HEAD^
+```
+
+所以，回滚的等级也就出来了，soft 小于 mixed，mixed 又小于 hard，执行 hard 操作，一定要小心，它会真正地销毁数据。其他任何形式的 reset 调用都可以轻松撤消，但是 --hard 选项不能，因为它强制覆盖了工作目录中的文件。
 
 ## 参考目录
 
 - [Git 常用命令](http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html)
 - [Git 原理入门](http://www.ruanyifeng.com/blog/2018/10/git-internals.html) - 阮一峰
+- [Git 从放弃到入门](https://juejin.cn/column/6969263852206686221) - 有图有真相，非常适用理解原理
 - [Git 教程 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
 - [珍藏多年的 Git 问题和操作清单](https://mp.weixin.qq.com/s/14WBS4GcZlEbBumfUagXMA)
-- [Git从放弃到入门](https://juejin.cn/column/6969263852206686221)
 - [Git 教程 - Maxsu](https://www.yiibai.com/git) --- 易百教程
-
-## Test
