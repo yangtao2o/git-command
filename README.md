@@ -9,87 +9,195 @@
 
 ![image](https://user-images.githubusercontent.com/19526072/49999253-4c690980-ffd1-11e8-892a-bff60b374d12.png)
 
-### 新建
+### 下载
 
-```bash
-# 在当前目录 git-command 下新建 Git 代码库，（会生成 .git 文件）
-git init
+#### Windows
 
-# 新建目录 git-command 并将其初始化为 Git 代码库
-git init git-command
+操作系统是 Windows，下载[git for windows](https://gitforwindows.org/)进行安装。
 
-# 从线上获取一个完整的项目代码
-git clone https://github.com/yangtao2o/git-command.git
+#### MacOS
+
+操作系统是 Mac OS , 使用 brew 命令来安装。[git for macOS](https://git-scm.com/download/mac)
+
+```sh
+brew install git
 ```
 
 ### 配置
 
 Git 的设置文件为 `.gitconfig` ，它可以在用户主目录下（全局配置），也可以在项目目录下（项目配置）。
 
-```bash
-# 显示配置信息
+显示配置信息
+
+```sh
 git config --list
+```
 
-# 修改
-git config --global
+修改
 
+```sh
 git config --global user.name "yangtao"
 git config --global user.email "xxx@.qq.com"
 ```
 
-### 增加、删除文件
+### 新建
 
-```bash
-# 添加指定文件到暂存区
+在当前目录 git-command 下新建 Git 代码库，（会生成 .git 文件）
+
+```sh
+git init
+```
+
+新建目录 git-command 并将其初始化为 Git 代码库
+
+```sh
+git init git-command
+```
+
+从线上获取一个完整的项目代码
+
+```sh
+git clone https://github.com/yangtao2o/git-command.git
+```
+
+### 暂存、删除
+
+添加指定文件到暂存区
+
+```sh
 git add index.html
+```
 
-# 添加指定目录到暂存区，包括子目录
+添加指定目录到暂存区，包括子目录
+
+```sh
 git add assets
+```
 
-# 添加当前目录的所有文件到暂存区
+添加当前目录的所有文件到暂存区
+
+```sh
 git add .
+```
 
-# 添加每个变化前，都会要求确认
-# 对于同一个文件的多处变化，可以实现分次提交
+添加每个变化前，都会要求确认，对于同一个文件的多处变化，可以实现分次提交
+
+```sh
 git add -p
+```
 
-# 删除工作区文件，并将这次删除加入暂存区
+删除工作区文件，并将这次删除加入暂存区
+
+```sh
 git rm [file1] [file2] ...
+```
 
-# 停止追踪指定文件，但该文件会保留在工作区
+停止追踪指定文件，但该文件会保留在工作区
+
+```sh
 git rm --cached [file]
+```
 
-# 修改文件名，并放入暂存区
+修改文件名，并放入暂存区
+
+```sh
 git mv index.html index-new.html
 ```
 
-### 代码提交
+### 状态查看
 
-```bash
-# 暂存区提交到仓库区 ( -m (msg) )
+运行 `git status` 检查存储库的当前状态
+
+```sh
+apple@dataozideiMac ~/Documents/tao/git-command
+(master **)$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+        deleted:    index-new.html
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        index-new2.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+返回结果内容：
+
+1. 当前分支数据是 `origin/master`
+1. `README.md` 文件已更改，`index-new.html`已删除，都尚未提交到仓库
+1. 提示下一步操作。提交或删除`git add/rm <file>...`更改、或者撤销`git restore <file>...`更改
+1. 未跟踪文件`index-new2.html`提交 `git add <file>`更改
+
+### 撤销
+
+`git restore <file>...`可使用暂存区数据覆盖工作区（working directory），即撤销掉本次修改
+
+```sh
+git restore index-new.html
+
+ (master **)$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   README.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        index-new2.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+### 提交更改
+
+暂存区提交到仓库区 ( -m (msg) )
+
+```sh
 git commit -m "My first commit"
+```
 
-# 指定文件提交
+指定文件提交
+
+```sh
 git commit [file1] [file2] ... -m [message]
+```
 
-# 提交工作区自上次 commit 之后的变化，直接到仓库区
+提交工作区自上次 commit 之后的变化，直接到仓库区
+
+```sh
 git commit -a
+```
 
-# 提交时显示所有的 diff 信息
+提交时显示所有的 diff 信息
+
+```sh
 git commit -v
+```
 
-# 使用一次新的 commit ，提交上一次提交
-# 如果代码没有任何变化，则用来改写上一次 commit 的提交信息
+使用一次新的 commit ，提交上一次提交；如果代码没有任何变化，则用来改写上一次 commit 的提交信息
+
+```sh
 git commit --amend -m "new commit"
+```
 
-# 重做上一次 commit ，并包括指定文件的新变化
+重做上一次 commit ，并包括指定文件的新变化
+
+```sh
 git commit --amend [file1] [file2] ...
-
 ```
 
 ### 分支
 
-```bash
+```sh
 # 列出所有的本地分支
 git branch
 
@@ -136,32 +244,47 @@ git branch -dr [remote/branch]
 
 ### 标签
 
-```bash
+```sh
 # 列出标签
 git tag
 ```
 
 ### 查看信息
 
-显示有变更的文件
-
-```bash
-git status
-```
-
 显示当前分支的版本历史
 
 ```sh
 git log
+
+# 单行展示
+git log --pretty=oneline
+
+# 列出最多两条提交纪录
+git log --pretty=oneline --max-count=2
+
+# 列出最近5分钟内的所有提交
+git log --pretty=oneline --since='5 minutes ago'
+
+# 列出5分钟之前的所有提交
+git log --pretty=oneline --until='5 minutes ago'
+
+# 列出指定作者的提交
+git log --pretty=oneline --author=<your name>
+
+# 列出所有分支的提交
+git log --pretty=oneline --all
+
+# 定制记录的显示格式
+# --graph git 以 ASCII 图形布局的形式显示提交树
+# --date=short 保持日期格式简短美观。
+$ git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 ```
 
-```sh
-# 显示整个本地仓储的commit, 包括所有branch的commit
-# 甚至包括已经撤销的commit, 只要HEAD发生了变化, 就会在reflog里面看得到
-# 回滚撤销时可关注其变化
-git reflog
+`git reflog`显示整个本地仓储的 commit, 包括所有 branch 的 commit，甚至包括已经撤销的 commit, 只要 HEAD 发生了变化, 就会在 reflog 里面看得到
 
-# 比如回滚记录
+比如回滚记录
+
+```sh
 22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{0}: reset: moving to HEAD^
 cafa257 HEAD@{1}: pull: Fast-forward
 22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{2}: reset: moving to HEAD^
