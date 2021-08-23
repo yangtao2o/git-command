@@ -2,12 +2,32 @@
 
 ## 基本使用
 
+### 需要了解的概念
+
+Git 有三种状态，文件可能处于其中之一： 已提交（committed）、已修改（modified） 和 已暂存（staged）。
+
+- `已修改`表示修改了文件，但还没保存到数据库中
+- `已暂存`表示对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中
+- `已提交`表示数据已经安全地保存在本地数据库中
+
+与之对应的操作就会有三个阶段：
+
+- 工作区（Working Directory）
+- 暂存区/索引(Staging Area / Index)
+- Git 目录/仓库（.git directory / Repository）
+
+![image](https://user-images.githubusercontent.com/19526072/49999253-4c690980-ffd1-11e8-892a-bff60b374d12.png)
+
 - Workspace: 工作区
 - Index / Stage: 暂存区
 - Repository: 仓库区（或本地仓库）
 - Remote: 远程仓库
 
-![image](https://user-images.githubusercontent.com/19526072/49999253-4c690980-ffd1-11e8-892a-bff60b374d12.png)
+对应 Git 相关概念已经有了最基础的了解，那每一个文件呢？对应操作 Git 不同阶段会有什么与之对应的状态呢？
+
+当然有，而且只有两种状态，`已跟踪`、`未跟踪`。
+
+详细内容，可以阅读这里：[Git 从放弃到入门(二)](https://juejin.cn/post/6973299611536457742)
 
 ### 下载
 
@@ -197,55 +217,102 @@ git commit --amend [file1] [file2] ...
 
 ### 分支
 
+Git 的分支本质上是指向提交对象的可变指针。
+
+Git 的默认分支名字是 master, master 分支会在每次提交时自动向前移动,指向最后那个提交对象。
+
+Git 保存的数据不是文件的变化或者差异，而是一系列不同时刻的快照 (snapshot)。在进行提交操作时，Git 会保存一个提交对象(commit object)。 该提交对象还包含了作者的姓名和邮箱、提交时输入的信息以及指向它的父对象的指针。
+
+列出所有的本地分支
+
 ```sh
-# 列出所有的本地分支
 git branch
+```
 
-# 列出所有的远程分支 ( -r (remotes))
+列出所有的远程分支 ( -r (remotes))
+
+```sh
 git branch -r
+```
 
-# 列出所有的本地分支和远程分支
+列出所有的本地分支和远程分支
+
+```sh
 git branch -a
+```
 
-# 新建一个分支，但依然停留在当前分支
+新建一个分支，但依然停留在当前分支
+
+```sh
 git branch primary
+```
 
-# 新建，并切换至 该分支
+新建，并切换至 该分支
+
+```sh
 git checkout -b primary-yt
+```
 
-# 新建，指向指定 commit
+新建，指向指定 commit
+
+```sh
 git branch [branch] [commitID]
+```
 
-# 新建，与指定的远程分支建立追踪关系
+新建，与指定的远程分支建立追踪关系
+
+```sh
 git branch --track [branch] [remote-branch]
+```
 
-# 切换到指定分支，并更新工作区
+切换到指定分支，并更新工作区
+
+```sh
 git checkout [branch-name]
+```
 
-# 切换到上一个分支
+切换到上一个分支
+
+```sh
 git checkout -
+```
 
-# 建立追踪关系，在现有分支与指定的远程分支之间
+建立追踪关系，在现有分支与指定的远程分支之间
+
+```sh
 git branch --set-upstream [branch] [remote-branch]
+```
 
-# 合并指定分支 master-yt 到当前分支 master
+合并指定分支 master-yt 到当前分支 master
+
+```sh
 git merge master-yt
+```
 
-# 选择一个 commit，合并进当前分支
+选择一个  commit，合并进当前分支
+
+```sh
 git cherry-pick [commitid]
+```
 
-# 删除分支
+删除分支
+
+```sh
 git branch -d master-ytt
+```
 
-# 删除远程分支
+删除远程分支
+
+```sh
 git push origin --delete [branch-name]
 git branch -dr [remote/branch]
 ```
 
 ### 标签
 
+列出标签
+
 ```sh
-# 列出标签
 git tag
 ```
 
@@ -255,29 +322,51 @@ git tag
 
 ```sh
 git log
+```
 
-# 单行展示
+单行展示
+
+```sh
 git log --pretty=oneline
+```
 
-# 列出最多两条提交纪录
+列出最多两条提交纪录
+
+```sh
 git log --pretty=oneline --max-count=2
+```
 
-# 列出最近5分钟内的所有提交
+列出最近 5 分钟内的所有提交
+
+```sh
 git log --pretty=oneline --since='5 minutes ago'
+```
 
-# 列出5分钟之前的所有提交
+列出 5 分钟之前的所有提交
+
+```sh
 git log --pretty=oneline --until='5 minutes ago'
+```
 
-# 列出指定作者的提交
+列出指定作者的提交
+
+```sh
 git log --pretty=oneline --author=<your name>
+```
 
-# 列出所有分支的提交
+列出所有分支的提交
+
+```sh
 git log --pretty=oneline --all
+```
 
-# 定制记录的显示格式
-# --graph git 以 ASCII 图形布局的形式显示提交树
-# --date=short 保持日期格式简短美观。
-$ git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+定制记录的显示格式
+
+- `--graph` git 以 ASCII 图形布局的形式显示提交树
+- `--date=short` 保持日期格式简短美观。
+
+```sh
+git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 ```
 
 `git reflog`显示整个本地仓储的 commit, 包括所有 branch 的 commit，甚至包括已经撤销的 commit, 只要 HEAD 发生了变化, 就会在 reflog 里面看得到
@@ -304,24 +393,35 @@ git ls-files -s
 
 ### 回滚
 
+三种常用 mode 方式：mixed（默认值）、soft、hard 等
+
 ```sh
 git reset [<mode>] [<commit>]
 ```
 
-三种常用 mode 方式：mixed（默认值）、soft、hard 等
+reset 只会用 HEAD 移动节点，索引和工作目录内容未受影响
 
 ```sh
-# reset 只会用 HEAD 移动节点，索引和工作目录内容未受影响
 git reset --soft  HEAD^
+```
 
-# reset 会用 HEAD 指向的当前快照的内容来更新暂存区（索引）
+reset 会用 HEAD 指向的当前快照的内容来更新暂存区（索引）
+
+```sh
 git reset --mixed  HEAD^
+```
 
-# reset 继续这 --mixed 的操作覆盖索引，同时会将索引内容覆盖工作目录
+reset 继续这 --mixed 的操作覆盖索引，同时会将索引内容覆盖工作目录
+
+```sh
 git reset --hard  HEAD^
 ```
 
-所以，回滚的等级也就出来了，soft 小于 mixed，mixed 又小于 hard，执行 hard 操作，一定要小心，它会真正地销毁数据。其他任何形式的 reset 调用都可以轻松撤消，但是 --hard 选项不能，因为它强制覆盖了工作目录中的文件。
+reset 命令会以特定的顺序重写 HEAD、Staging Area、 Working Directory，通过指定以下选项时停止：
+
+- 移动 HEAD 分支的指向 （若指定了 --soft，则到此停止）
+- 使暂存区域（索引）看起来像 HEAD （若不指定 或 指定 --mixed，则到此停止）
+- 使工作目录看起来像暂存区域（索引） （若指定了 --hard ）
 
 ## 参考目录
 
