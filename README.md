@@ -431,3 +431,4 @@ reset 命令会以特定的顺序重写 HEAD、Staging Area、 Working Directory
 - [Git 教程 - 廖雪峰的官方网站](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)
 - [珍藏多年的 Git 问题和操作清单](https://mp.weixin.qq.com/s/14WBS4GcZlEbBumfUagXMA)
 - [Git 教程 - Maxsu](https://www.yiibai.com/git) --- 易百教程
+- [Git Snippets](https://www.30secondsofcode.org/git/p/1) - 平时常用命令集合
