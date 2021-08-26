@@ -337,6 +337,20 @@ it merge --abort
 
 Rebase，翻译是变基，展开来说就是，把你指定的 commit 以及它所在的 commit 串，以指定的目标 commit 为基础，依次重新提交一次。
 
+如果把 merge 换成 rebase，可以这样操作：
+
+```sh
+git checkout branch1
+git rebase master
+```
+
+在 rebase 之后，记得切回 master 再 merge 一下，把 master 移到最新的 commit：
+
+```sh
+git checkout master
+git merge branch1
+```
+
 ### 标签
 
 列出所有标签列表
