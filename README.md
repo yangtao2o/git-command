@@ -82,6 +82,8 @@ git clone https://github.com/yangtao2o/git-command.git
 
 ### 暂存、删除
 
+add 本质：添加的是文件改动，而不是文件名
+
 添加指定文件到暂存区
 
 ```sh
@@ -215,6 +217,16 @@ git commit --amend -m "new commit"
 git commit --amend [file1] [file2] ...
 ```
 
+### pull 和 push
+
+pull 的实际操作其实是把远端仓库的内容用 fetch 取下来之后，用 merge 来合并。
+
+push：把当前 branch 的位置（即它指向哪个 commit）上传到远端仓库，并把它的路径上的 commits 一并上传
+
+push 的时候，如果当前分支是一个本地创建的分支，需要指定远程仓库名和分支名，用 `git push origin branch_name` 的格式，而不能只用 `git push`；或者可以通过 `git config` 修改 `push.default` 来改变 push 时的行为逻辑。
+
+push 的时候之后上传当前分支，并不会上传 HEAD；远程仓库的 HEAD 是永远指向默认分支（即 master）的。
+
 ### 分支
 
 Git 的分支本质上是指向提交对象的可变指针。
@@ -308,6 +320,19 @@ git push origin --delete [branch-name]
 git branch -dr [remote/branch]
 ```
 
+### 冲突
+
+如果在 `git merge feature1` 的时候发生了冲突（Conflict），Git 就会把问题交给你来决定。我们需要做两件事：
+
+1. 查看并解决掉冲突文件
+1. 手动 commit 一下
+
+放弃解决冲突
+
+```sh
+it merge --abort
+```
+
 ### 标签
 
 列出标签
@@ -322,6 +347,18 @@ git tag
 
 ```sh
 git log
+```
+
+查看详细历史，`-p` 是 `--patch` 的缩写
+
+```sh
+git log -p
+```
+
+查看简要统计
+
+```sh
+git log --stat
 ```
 
 单行展示
@@ -391,6 +428,27 @@ cafa257 HEAD@{3}: commit: test: 回滚4
 git ls-files -s
 ```
 
+看任意一个 commit
+
+```sh
+git show 3a2724dc87
+```
+
+看未提交的内容
+
+```sh
+# 显示工作目录和暂存区之间的不同
+git diff
+
+# 显示暂存区和上一条提交之间的不同
+git diff --staged
+git diff --cached  # 等价
+
+# 比对工作目录和上一条提交
+# 相当于 git diff 和 git diff --staged 的叠加
+git diff HEAD
+```
+
 ### 回滚
 
 三种常用 mode 方式：mixed（默认值）、soft、hard 等
@@ -432,3 +490,4 @@ reset 命令会以特定的顺序重写 HEAD、Staging Area、 Working Directory
 - [珍藏多年的 Git 问题和操作清单](https://mp.weixin.qq.com/s/14WBS4GcZlEbBumfUagXMA)
 - [Git 教程 - Maxsu](https://www.yiibai.com/git) --- 易百教程
 - [Git Snippets](https://www.30secondsofcode.org/git/p/1) - 平时常用命令集合
+- [Git 原理详解及实用指南](https://juejin.cn/book/6844733697996881928) - 掘金小册，让你不仅用上、更用明白的 Git 实用指南
