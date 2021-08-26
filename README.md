@@ -351,13 +351,11 @@ git checkout master
 git merge branch1
 ```
 
-### 标签
+交互式 rebase 最常用的场景是修改写错的 commit，但也可以用作其他用途。它的大致用法：
 
-列出所有标签列表
-
-```sh
-git tag
-```
+- 使用方式是 `git rebase -i 目标commit`；
+- 在编辑界面中指定需要操作的 commits 以及操作类型；
+- 操作完成之后用 `git rebase --continue` 来继续 rebase 过程。
 
 ### 查看信息
 
@@ -467,6 +465,14 @@ git diff --cached  # 等价
 git diff HEAD
 ```
 
+### 标签
+
+列出所有标签列表
+
+```sh
+git tag
+```
+
 ### 回滚
 
 三种常用 mode 方式：mixed（默认值）、soft、hard 等
@@ -487,7 +493,7 @@ reset 会用 HEAD 指向的当前快照的内容来更新暂存区（索引）
 git reset --mixed  HEAD^
 ```
 
-reset 继续这 --mixed 的操作覆盖索引，同时会将索引内容覆盖工作目录
+reset 继续这 `--mixed` 的操作覆盖索引，同时会将索引内容覆盖工作目录
 
 ```sh
 git reset --hard  HEAD^
@@ -498,6 +504,24 @@ reset 命令会以特定的顺序重写 HEAD、Staging Area、 Working Directory
 - 移动 HEAD 分支的指向 （若指定了 --soft，则到此停止）
 - 使暂存区域（索引）看起来像 HEAD （若不指定 或 指定 --mixed，则到此停止）
 - 使工作目录看起来像暂存区域（索引） （若指定了 --hard ）
+
+### Push 后的回滚
+
+#### 在自己的 branch
+
+因为你刻意修改了一些内容，这个冲突是你预料到的，你本来就希望用本地的内容覆盖掉中央仓库的内容。那么这时就要选择「强行」push：
+
+```sh
+git push origin branch1 -f
+```
+
+#### 在主分支 master
+
+增加一个新的提交，把之前提交的内容抹掉，希望撤销哪个 commit，就把它填在后面
+
+```sh
+git revert HEAD^
+```
 
 ## 参考目录
 
