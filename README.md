@@ -217,7 +217,7 @@ git commit --amend -m "new commit"
 git commit --amend [file1] [file2] ...
 ```
 
-### pull 和 push
+### Pull 和 push
 
 pull 的实际操作其实是把远端仓库的内容用 fetch 取下来之后，用 merge 来合并。
 
@@ -231,7 +231,7 @@ push 的时候之后上传当前分支，并不会上传 HEAD；远程仓库的 
 
 Git 的分支本质上是指向提交对象的可变指针。
 
-Git 的默认分支名字是 master, master 分支会在每次提交时自动向前移动,指向最后那个提交对象。
+Git 的默认分支名字是 master，master 分支会在每次提交时自动向前移动，指向最后那个提交对象。
 
 Git 保存的数据不是文件的变化或者差异，而是一系列不同时刻的快照 (snapshot)。在进行提交操作时，Git 会保存一个提交对象(commit object)。 该提交对象还包含了作者的姓名和邮箱、提交时输入的信息以及指向它的父对象的指针。
 
@@ -307,7 +307,7 @@ git merge master-yt
 git cherry-pick [commitid]
 ```
 
-删除分支
+删除本地分支
 
 ```sh
 git branch -d master-ytt
@@ -320,7 +320,7 @@ git push origin --delete [branch-name]
 git branch -dr [remote/branch]
 ```
 
-### 冲突
+### Merge 冲突
 
 如果在 `git merge feature1` 的时候发生了冲突（Conflict），Git 就会把问题交给你来决定。我们需要做两件事：
 
@@ -332,6 +332,10 @@ git branch -dr [remote/branch]
 ```sh
 it merge --abort
 ```
+
+### Rebase
+
+Rebase，翻译是变基，展开来说就是，把你指定的 commit 以及它所在的 commit 串，以指定的目标 commit 为基础，依次重新提交一次。
 
 ### 标签
 
