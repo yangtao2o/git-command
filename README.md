@@ -353,7 +353,7 @@ git merge branch1
 
 ### 标签
 
-列出标签
+列出所有标签列表
 
 ```sh
 git tag
