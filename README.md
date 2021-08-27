@@ -422,22 +422,6 @@ git log --pretty=oneline --all
 git log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 ```
 
-`git reflog`显示整个本地仓储的 commit, 包括所有 branch 的 commit，甚至包括已经撤销的 commit, 只要 HEAD 发生了变化, 就会在 reflog 里面看得到
-
-比如回滚记录
-
-```sh
-22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{0}: reset: moving to HEAD^
-cafa257 HEAD@{1}: pull: Fast-forward
-22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{2}: reset: moving to HEAD^
-cafa257 HEAD@{3}: commit: test: 回滚4
-22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{4}: reset: moving to HEAD^
-25d1741 HEAD@{5}: commit: test: 回滚3
-22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{6}: reset: moving to HEAD^
-2130aa8 HEAD@{7}: commit: test: 回滚2
-22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{8}: commit: test: 回滚
-```
-
 查看暂存区域（索引）内容
 
 ```sh
@@ -465,12 +449,51 @@ git diff --cached  # 等价
 git diff HEAD
 ```
 
-### 标签
+### Reflog
 
-列出所有标签列表
+reflog 是 "reference log" 的缩写。`git reflog`显示整个本地仓储的 commit, 包括所有 branch 的 commit，甚至包括已经撤销的 commit, 只要 HEAD 发生了变化, 就会在 reflog 里面看得到
+
+比如回滚记录
 
 ```sh
-git tag
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{0}: reset: moving to HEAD^
+cafa257 HEAD@{1}: pull: Fast-forward
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{2}: reset: moving to HEAD^
+cafa257 HEAD@{3}: commit: test: 回滚4
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{4}: reset: moving to HEAD^
+25d1741 HEAD@{5}: commit: test: 回滚3
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{6}: reset: moving to HEAD^
+2130aa8 HEAD@{7}: commit: test: 回滚2
+22d2e82 (HEAD -> master, origin/master, origin/HEAD) HEAD@{8}: commit: test: 回滚
+```
+
+reflog 默认查看 HEAD 的移动历史，除此之外，也可以手动加上名称来查看其他引用的移动历史，例如某个 branch：
+
+```sh
+git reflog master
+
+8d6c84a (HEAD -> dev-readme, origin/master, origin/dev-readme, origin/dev, origin/HEAD, master, dev) master@{0}: commit: docs: update
+e3f53c8 master@{1}: merge dev-readme: Merge made by the 'recursive' strategy.
+b46853f master@{2}: pull: Merge made by the 'recursive' strategy.
+```
+
+### 暂存
+
+```sh
+# 暂存
+git stash
+
+# 所有已暂存列表
+git stash list
+
+# 恢复
+git stash pop
+
+# 清除所有
+git stash clear
+
+# `-u` 参数，它是 `--include-untracked` 的简写，可以添加没有被跟踪（即 git add）的文件
+git stash -u
 ```
 
 ### 回滚
@@ -521,6 +544,16 @@ git push origin branch1 -f
 
 ```sh
 git revert HEAD^
+```
+
+### 标签
+
+tag 是一个和 branch 非常相似的概念，它和 branch 最大的区别是：tag 不能移动。所以在很多团队中，tag 被用来在关键版本处打标记用。
+
+列出所有标签列表
+
+```sh
+git tag
 ```
 
 ## 参考目录
